@@ -1,0 +1,103 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = [{
+    sportIdx: 0,
+    category: 'Baseball',
+    sport: 'MLB'
+}, {
+    sportIdx: 1,
+    category: 'Basketball',
+    sport: 'NBA'
+}, {
+    sportIdx: 2,
+    category: 'Basketball',
+    sport: 'NCAAB'
+}, {
+    sportIdx: 3,
+    category: 'Football',
+    sport: 'NCAAF'
+}, {
+    sportIdx: 4,
+    category: 'Football',
+    sport: 'NFL'
+}, {
+    sportIdx: 5,
+    category: 'Hockey',
+    sport: 'NHL'
+}, {
+    sportIdx: 6,
+    category: '',
+    sport: ''
+}, {
+    sportIdx: 7,
+    category: 'Soccer',
+    sport: 'SOCCER'
+}, {
+    sportIdx: 8,
+    category: 'Basketball',
+    sport: 'WNBA'
+}, {
+    sportIdx: 9,
+    category: 'Tennis',
+    sport: 'TENNIS'
+}, {
+    sportIdx: 10,
+    category: 'Boxing',
+    sport: 'BOXING'
+}, {
+    sportIdx: 11,
+    category: 'MMA',
+    sport: 'MMA'
+}, {
+    sportIdx: 12,
+    category: 'Cricket',
+    sport: 'CRICKET'
+}, {
+    sportIdx: 13,
+    category: 'Horse racing',
+    sport: 'HORSE-RACING'
+}, {
+    sportIdx: 14,
+    category: 'Hockey',
+    sport: 'KHL'
+}, {
+    sportIdx: 15,
+    category: 'Hockey',
+    sport: 'AHL'
+}, {
+    sportIdx: 16,
+    category: 'Hockey',
+    sport: 'SHL'
+}, {
+    sportIdx: 17,
+    category: '',
+    sport: 'HALL'
+}, {
+    sportIdx: 18,
+    category: '',
+    sport: 'LMP'
+}, {
+    sportIdx: 19,
+    category: 'Baseball',
+    sport: 'NPB'
+}, {
+    sportIdx: 20,
+    category: 'Baseball',
+    sport: 'KBO'
+}, {
+    sportIdx: 21,
+    category: 'Golf',
+    sport: 'GOLF'
+}, {
+    sportIdx: 22,
+    category: 'Football',
+    sport: 'RUGBY'
+}, {
+    sportIdx: 23,
+    category: 'BaseBall',
+    sport: 'WBC'
+}];
+//# sourceMappingURL=sportConfig.js.map
