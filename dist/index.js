@@ -50,9 +50,9 @@ var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
 
-var _JwtStrategy = require('./middleware/JwtStrategy');
+var _jwtStrategy = require('./middleware/jwtStrategy');
 
-var _JwtStrategy2 = _interopRequireDefault(_JwtStrategy);
+var _jwtStrategy2 = _interopRequireDefault(_jwtStrategy);
 
 var _mongoose = require('mongoose');
 
@@ -114,7 +114,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-_passport2.default.use(_JwtStrategy2.default);
+_passport2.default.use(_jwtStrategy2.default);
 
 _mongoose2.default.Promise = global.Promise;;
 _mongoose2.default.connect(_config2.default.mongoURL);
