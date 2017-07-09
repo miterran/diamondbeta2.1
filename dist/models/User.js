@@ -17,7 +17,7 @@ var Schema = _mongoose2.default.Schema;
 var UserSchema = _mongoose2.default.Schema({
 	accountType: {
 		type: String,
-		required: true
+		default: 'user'
 	},
 	superAgent: {
 		type: String,
@@ -83,8 +83,7 @@ var UserSchema = _mongoose2.default.Schema({
 		required: true
 	},
 	createdAt: {
-		type: Date,
-		default: Date.now
+		type: Date
 	}
 });
 

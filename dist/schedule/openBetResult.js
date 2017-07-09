@@ -85,7 +85,7 @@ var openBetResult = function () {
 													eventsWagerDetail: openBet.eventsWagerDetail,
 													orderStatus: 'Pending',
 													createdAt: openBet.createdAt,
-													completedAt: new Date(),
+													completedAt: (0, _moment2.default)(),
 													orderResultAmount: 0
 												};
 
@@ -261,6 +261,10 @@ var openBetResult = function () {
 		return _ref.apply(this, arguments);
 	};
 }();
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
 
 var _config = require('../config');
 

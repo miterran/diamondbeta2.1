@@ -46,7 +46,7 @@ router.get('/fetch-user-state', function () {
 						openBetParlay = 0;
 						totalGamePending = 0;
 						_context.next = 8;
-						return HistoryBet.find({ user: req.user.username, createdAt: { $gte: (0, _moment2.default)().startOf('week').utc('+07:00').format(), $lte: (0, _moment2.default)().endOf('week').utc('+07:00').format() } });
+						return HistoryBet.find({ user: req.user.username, createdAt: { $gte: (0, _moment2.default)().startOf('week'), $lte: (0, _moment2.default)().endOf('week') } });
 
 					case 8:
 						thisWeekHistoryBets = _context.sent;

@@ -29,7 +29,7 @@ var HistoryBet = _BetOrder2.default.HistoryBet;
 var router = _express2.default.Router();
 
 router.get('/fetch-history-bets', function (req, res) {
-	HistoryBet.find({ user: req.user.username, completedAt: { $gte: (0, _moment2.default)().startOf('week').subtract(7, 'day').utc('+07:00').format(), $lte: (0, _moment2.default)().endOf('week').utc('+07:00').format() } }, function (err, result) {
+	HistoryBet.find({ user: req.user.username, completedAt: { $gte: (0, _moment2.default)().startOf('week').subtract(7, 'day').format(), $lte: (0, _moment2.default)().endOf('week').format() } }, function (err, result) {
 		if (err) res.status(404).send('fetch user history bet error');
 		res.json(result);
 	});
@@ -39,9 +39,8 @@ router.post('/fetch-history-summary', function (req, res) {
 	var _datesData;
 
 	var weekNum = req.body.weekNum;
-	var datesData = (_datesData = {}, _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(0, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(1, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(2, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(3, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(4, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(5, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(6, 'day').utc('+07:00').format('MMM DD'), 0), _defineProperty(_datesData, 'Total', 0), _datesData);
-
-	HistoryBet.find({ user: req.user.username, completedAt: { $gte: (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(0, 'day').utc('+07:00').format(), $lte: (0, _moment2.default)().endOf('week').subtract(weekNum, 'day').add(0, 'day').utc('+07:00').format() } }, function (err, weeklyHistoryResult) {
+	var datesData = (_datesData = {}, _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(0, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(1, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(2, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(3, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(4, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(5, 'day').format('MMM DD'), 0), _defineProperty(_datesData, (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(6, 'day').format('MMM DD'), 0), _defineProperty(_datesData, 'Total', 0), _datesData);
+	HistoryBet.find({ user: req.user.username, completedAt: { $gte: (0, _moment2.default)().startOf('week').subtract(weekNum, 'day').add(0, 'day').format(), $lte: (0, _moment2.default)().endOf('week').subtract(weekNum, 'day').add(0, 'day').format() } }, function (err, weeklyHistoryResult) {
 		if (err) throw err;
 		if (!_lodash2.default.isEmpty(weeklyHistoryResult)) {
 			weeklyHistoryResult.map(function (event, eventIdx) {

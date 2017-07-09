@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -395,7 +399,7 @@ var openBetResultMiddleWare = function () {
 													eventsWagerDetail: openBet.eventsWagerDetail,
 													orderStatus: 'Pending',
 													createdAt: openBet.createdAt,
-													completedAt: new Date(),
+													completedAt: (0, _moment2.default)(),
 													orderResultAmount: 0
 												};
 

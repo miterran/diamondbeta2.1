@@ -52,8 +52,7 @@ var BetOrderSchema = new _mongoose2.default.Schema({
         default: 0
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+        type: Date
     },
     completedAt: {
         type: Date

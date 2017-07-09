@@ -73,7 +73,7 @@ router.post('/straight-wager-submit', function () {
 											case 2:
 												existStraightOrders = _context.sent;
 
-												if (!(existStraightOrders.length > 0)) {
+												if (_lodash2.default.isEmpty(existStraightOrders)) {
 													_context.next = 13;
 													break;
 												}
@@ -85,7 +85,7 @@ router.post('/straight-wager-submit', function () {
 												event.WagerDetail.WagerAmount = 0;
 												event.WagerDetail.BetConfirm = false;
 												latestStraightOddsWagerList.push(event);
-												_context.next = 53;
+												_context.next = 88;
 												break;
 
 											case 13:
@@ -95,70 +95,22 @@ router.post('/straight-wager-submit', function () {
 
 											case 16:
 												response = _context.sent;
-
-												if (!(response.data.length > 0 || (0, _moment2.default)().utc('+07:00').isBefore(_moment2.default.parseZone(event.MatchTime + '+07:00').utc()))) {
-													_context.next = 45;
-													break;
-												}
-
-												event.OddDetail = response.data[0].Odds[0];
-												event.PrevBetDetail = Object.assign({}, event.BetDetail);
 												_context.t0 = true;
-												_context.next = _context.t0 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Home') ? 23 : _context.t0 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Away') ? 25 : _context.t0 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Home') ? 27 : _context.t0 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Away') ? 30 : _context.t0 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Over') ? 33 : _context.t0 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Under') ? 36 : _context.t0 === (event.BetDetail.BetType === 'Draw' && event.Sport === 7) ? 39 : 41;
+												_context.next = _context.t0 === _lodash2.default.isEmpty(response.data) ? 20 : _context.t0 === (0, _moment2.default)().isAfter((0, _moment2.default)(event.MatchTimePST)) ? 29 : 38;
 												break;
 
-											case 23:
-												event.BetDetail.OddLine = event.OddDetail.MoneyLineHome;
-												return _context.abrupt('break', 42);
+											case 20:
+												event.WagerDetail.Status = 'NotFound';
+												event.WagerDetail.ErrMsg = 'Event Not Found';
+												event.WagerDetail.RiskAmount = 0;
+												event.WagerDetail.WinAmount = 0;
+												event.WagerDetail.WagerAmount = 0;
+												event.WagerDetail.BetConfirm = false;
+												delete event.PrevBetDetail;
+												latestStraightOddsWagerList.push(event);
+												return _context.abrupt('break', 88);
 
-											case 25:
-												event.BetDetail.OddLine = event.OddDetail.MoneyLineAway;
-												return _context.abrupt('break', 42);
-
-											case 27:
-												event.BetDetail.OddPoint = event.OddDetail.PointSpreadHome;
-												event.BetDetail.OddLine = event.OddDetail.PointSpreadHomeLine;
-												return _context.abrupt('break', 42);
-
-											case 30:
-												event.BetDetail.OddPoint = event.OddDetail.PointSpreadAway;
-												event.BetDetail.OddLine = event.OddDetail.PointSpreadAwayLine;
-												return _context.abrupt('break', 42);
-
-											case 33:
-												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
-												event.BetDetail.OddLine = event.OddDetail.OverLine;
-												return _context.abrupt('break', 42);
-
-											case 36:
-												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
-												event.BetDetail.OddLine = event.OddDetail.UnderLine;
-												return _context.abrupt('break', 42);
-
-											case 39:
-												event.BetDetail.OddLine = event.OddDetail.DrawLine;
-												return _context.abrupt('break', 42);
-
-											case 41:
-												return _context.abrupt('return');
-
-											case 42:
-												if (JSON.stringify(event.BetDetail) !== JSON.stringify(event.PrevBetDetail)) {
-													event.WagerDetail.Status = 'HasUpdated';
-													event.WagerDetail.ErrMsg = 'Wager Has Been Updated';
-													event.WagerDetail.RiskAmount = 0;
-													event.WagerDetail.WinAmount = 0;
-													event.WagerDetail.WagerAmount = 0;
-													event.WagerDetail.BetConfirm = false;
-													latestStraightOddsWagerList.push(event);
-												} else {
-													delete event.PrevBetDetail;
-													latestStraightOddsWagerList.push(event);
-												}
-												_context.next = 53;
-												break;
-
-											case 45:
+											case 29:
 												event.WagerDetail.Status = 'TimeOut';
 												event.WagerDetail.ErrMsg = 'Event Time Out';
 												event.WagerDetail.RiskAmount = 0;
@@ -167,8 +119,87 @@ router.post('/straight-wager-submit', function () {
 												event.WagerDetail.BetConfirm = false;
 												delete event.PrevBetDetail;
 												latestStraightOddsWagerList.push(event);
+												return _context.abrupt('break', 88);
 
-											case 53:
+											case 38:
+												event.OddDetail = response.data[0].Odds[0];
+												event.OddDetail.LastUpdatedPST = (0, _moment2.default)(response.data[0].Odds[0].lastUpdated).subtract('7', 'hours');
+												delete event.OddDetail.LastUpdated;
+												event.PrevBetDetail = Object.assign({}, event.BetDetail);
+												_context.t1 = true;
+												_context.next = _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Home') ? 45 : _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Away') ? 47 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Home') ? 49 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Away') ? 52 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Over') ? 55 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Under') ? 58 : _context.t1 === (event.BetDetail.BetType === 'Draw' && event.Sport === 7) ? 61 : 63;
+												break;
+
+											case 45:
+												event.BetDetail.OddLine = event.OddDetail.MoneyLineHome;
+												return _context.abrupt('break', 64);
+
+											case 47:
+												event.BetDetail.OddLine = event.OddDetail.MoneyLineAway;
+												return _context.abrupt('break', 64);
+
+											case 49:
+												event.BetDetail.OddPoint = event.OddDetail.PointSpreadHome;
+												event.BetDetail.OddLine = event.OddDetail.PointSpreadHomeLine;
+												return _context.abrupt('break', 64);
+
+											case 52:
+												event.BetDetail.OddPoint = event.OddDetail.PointSpreadAway;
+												event.BetDetail.OddLine = event.OddDetail.PointSpreadAwayLine;
+												return _context.abrupt('break', 64);
+
+											case 55:
+												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
+												event.BetDetail.OddLine = event.OddDetail.OverLine;
+												return _context.abrupt('break', 64);
+
+											case 58:
+												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
+												event.BetDetail.OddLine = event.OddDetail.UnderLine;
+												return _context.abrupt('break', 64);
+
+											case 61:
+												event.BetDetail.OddLine = event.OddDetail.DrawLine;
+												return _context.abrupt('break', 64);
+
+											case 63:
+												return _context.abrupt('return');
+
+											case 64:
+												_context.t2 = true;
+												_context.next = _context.t2 === (Number(event.BetDetail.OddLine) === 0) ? 67 : _context.t2 === (JSON.stringify(event.BetDetail) !== JSON.stringify(event.PrevBetDetail)) ? 76 : 84;
+												break;
+
+											case 67:
+												event.WagerDetail.Status = 'NotAvailable';
+												event.WagerDetail.ErrMsg = 'Wager Currently Not Available';
+												event.WagerDetail.RiskAmount = 0;
+												event.WagerDetail.WinAmount = 0;
+												event.WagerDetail.WagerAmount = 0;
+												event.WagerDetail.BetConfirm = false;
+												delete event.PrevBetDetail;
+												latestStraightOddsWagerList.push(event);
+												return _context.abrupt('break', 87);
+
+											case 76:
+												event.WagerDetail.Status = 'HasUpdated';
+												event.WagerDetail.ErrMsg = 'Wager Has Been Updated';
+												event.WagerDetail.RiskAmount = 0;
+												event.WagerDetail.WinAmount = 0;
+												event.WagerDetail.WagerAmount = 0;
+												event.WagerDetail.BetConfirm = false;
+												latestStraightOddsWagerList.push(event);
+												return _context.abrupt('break', 87);
+
+											case 84:
+												delete event.PrevBetDetail;
+												latestStraightOddsWagerList.push(event);
+												return _context.abrupt('return');
+
+											case 87:
+												return _context.abrupt('return');
+
+											case 88:
 											case 'end':
 												return _context.stop();
 										}
@@ -213,7 +244,8 @@ router.post('/straight-wager-submit', function () {
 																			ErrMsg: '',
 																			RiskAmount: event.WagerDetail.RiskAmount,
 																			WinAmount: event.WagerDetail.WinAmount
-																		}
+																		},
+																		createdAt: (0, _moment2.default)()
 																	});
 
 																	event.Status = 'Pending';

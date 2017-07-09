@@ -119,7 +119,7 @@ router.post('/parlay-wager-submit', function () {
 											case 3:
 												response = _context.sent;
 												_context.t0 = true;
-												_context.next = _context.t0 === _lodash2.default.isEmpty(response.data) ? 7 : _context.t0 === (0, _moment2.default)().utc('+07:00').isAfter(_moment2.default.parseZone(event.MatchTime + '+07:00').utc()) ? 16 : 25;
+												_context.next = _context.t0 === _lodash2.default.isEmpty(response.data) ? 7 : _context.t0 === (0, _moment2.default)().isAfter((0, _moment2.default)(event.MatchTimePST)) ? 16 : 25;
 												break;
 
 											case 7:
@@ -131,7 +131,7 @@ router.post('/parlay-wager-submit', function () {
 												event.WagerDetail.BetConfirm = false;
 												delete event.PrevBetDetail;
 												latestParlayOddsWagerList.push(event);
-												return _context.abrupt('break', 82);
+												return _context.abrupt('break', 84);
 
 											case 16:
 												event.WagerDetail.Status = 'TimeOut';
@@ -142,68 +142,70 @@ router.post('/parlay-wager-submit', function () {
 												event.WagerDetail.BetConfirm = false;
 												delete event.PrevBetDetail;
 												latestParlayOddsWagerList.push(event);
-												return _context.abrupt('break', 82);
+												return _context.abrupt('break', 84);
 
 											case 25:
 												event.OddDetail = response.data[0].Odds[0];
+												event.OddDetail.LastUpdatedPST = (0, _moment2.default)(response.data[0].Odds[0].lastUpdated).subtract('7', 'hours');
+												delete event.OddDetail.LastUpdated;
 												event.PrevBetDetail = Object.assign({}, event.BetDetail);
 												_context.t1 = true;
-												_context.next = _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Home') ? 30 : _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Away') ? 32 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Home') ? 34 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Away') ? 37 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Over') ? 40 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Under') ? 43 : _context.t1 === (event.BetDetail.BetType === 'Draw' && event.Sport === 7) ? 46 : 48;
+												_context.next = _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Home') ? 32 : _context.t1 === (event.BetDetail.BetType === 'M-Line' && event.BetDetail.OddTarget === 'Away') ? 34 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Home') ? 36 : _context.t1 === (event.BetDetail.BetType === 'Spread' && event.BetDetail.OddTarget === 'Away') ? 39 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Over') ? 42 : _context.t1 === (event.BetDetail.BetType === 'Total' && event.BetDetail.OddTarget === 'Under') ? 45 : _context.t1 === (event.BetDetail.BetType === 'Draw' && event.Sport === 7) ? 48 : 50;
 												break;
-
-											case 30:
-												event.BetDetail.OddLine = event.OddDetail.MoneyLineHome;
-												return _context.abrupt('break', 49);
 
 											case 32:
-												event.BetDetail.OddLine = event.OddDetail.MoneyLineAway;
-												return _context.abrupt('break', 49);
+												event.BetDetail.OddLine = event.OddDetail.MoneyLineHome;
+												return _context.abrupt('break', 51);
 
 											case 34:
+												event.BetDetail.OddLine = event.OddDetail.MoneyLineAway;
+												return _context.abrupt('break', 51);
+
+											case 36:
 												event.BetDetail.OddPoint = event.OddDetail.PointSpreadHome;
 												event.BetDetail.OddLine = event.OddDetail.PointSpreadHomeLine;
-												return _context.abrupt('break', 49);
+												return _context.abrupt('break', 51);
 
-											case 37:
+											case 39:
 												event.BetDetail.OddPoint = event.OddDetail.PointSpreadAway;
 												event.BetDetail.OddLine = event.OddDetail.PointSpreadAwayLine;
-												return _context.abrupt('break', 49);
+												return _context.abrupt('break', 51);
 
-											case 40:
+											case 42:
 												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
 												event.BetDetail.OddLine = event.OddDetail.OverLine;
-												return _context.abrupt('break', 49);
+												return _context.abrupt('break', 51);
 
-											case 43:
+											case 45:
 												event.BetDetail.OddPoint = event.OddDetail.TotalNumber;
 												event.BetDetail.OddLine = event.OddDetail.UnderLine;
-												return _context.abrupt('break', 49);
-
-											case 46:
-												event.BetDetail.OddLine = event.OddDetail.DrawLine;
-												return _context.abrupt('break', 49);
+												return _context.abrupt('break', 51);
 
 											case 48:
+												event.BetDetail.OddLine = event.OddDetail.DrawLine;
+												return _context.abrupt('break', 51);
+
+											case 50:
 												return _context.abrupt('return');
 
-											case 49:
+											case 51:
 												quarter = (event.BetDetail.OddPoint % 1).toFixed(2);
 												_context.t2 = true;
-												_context.next = _context.t2 === (Number(event.BetDetail.OddLine) === 0) ? 53 : _context.t2 === (Number(quarter) === 0.25 || Number(quarter) === 0.75) ? 62 : _context.t2 === (JSON.stringify(event.BetDetail) !== JSON.stringify(event.PrevBetDetail)) ? 70 : 78;
+												_context.next = _context.t2 === (Number(event.BetDetail.OddLine) === 0) ? 55 : _context.t2 === (Number(quarter) === 0.25 || Number(quarter) === 0.75) ? 64 : _context.t2 === (JSON.stringify(event.BetDetail) !== JSON.stringify(event.PrevBetDetail)) ? 72 : 80;
 												break;
 
-											case 53:
-												event.WagerDetail.Status = 'NotFound';
-												event.WagerDetail.ErrMsg = 'Event Not Found';
+											case 55:
+												event.WagerDetail.Status = 'NotAvailable';
+												event.WagerDetail.ErrMsg = 'Wager Currently Not Available';
 												event.WagerDetail.RiskAmount = 0;
 												event.WagerDetail.WinAmount = 0;
 												event.WagerDetail.WagerAmount = 0;
 												event.WagerDetail.BetConfirm = false;
 												delete event.PrevBetDetail;
 												latestParlayOddsWagerList.push(event);
-												return _context.abrupt('break', 81);
+												return _context.abrupt('break', 83);
 
-											case 62:
+											case 64:
 												event.WagerDetail.Status = 'Quarter';
 												event.WagerDetail.ErrMsg = 'Wager Currently Not Available';
 												event.WagerDetail.RiskAmount = 0;
@@ -211,9 +213,9 @@ router.post('/parlay-wager-submit', function () {
 												event.WagerDetail.WagerAmount = 0;
 												event.WagerDetail.BetConfirm = false;
 												latestParlayOddsWagerList.push(event);
-												return _context.abrupt('break', 81);
+												return _context.abrupt('break', 83);
 
-											case 70:
+											case 72:
 												event.WagerDetail.Status = 'HasUpdated';
 												event.WagerDetail.ErrMsg = 'Wager Has Been Updated';
 												event.WagerDetail.RiskAmount = 0;
@@ -221,17 +223,17 @@ router.post('/parlay-wager-submit', function () {
 												event.WagerDetail.WagerAmount = 0;
 												event.WagerDetail.BetConfirm = false;
 												latestParlayOddsWagerList.push(event);
-												return _context.abrupt('break', 81);
+												return _context.abrupt('break', 83);
 
-											case 78:
+											case 80:
 												delete event.PrevBetDetail;
 												latestParlayOddsWagerList.push(event);
 												return _context.abrupt('return');
 
-											case 81:
+											case 83:
 												return _context.abrupt('return');
 
-											case 82:
+											case 84:
 											case 'end':
 												return _context.stop();
 										}
@@ -269,7 +271,8 @@ router.post('/parlay-wager-submit', function () {
 													RiskAmount: req.body.riskAmount,
 													WinAmount: req.body.winAmount,
 													Result: ''
-												}
+												},
+												createdAt: (0, _moment2.default)()
 											});
 
 											latestParlayOddsWagerList.map(function (event) {
