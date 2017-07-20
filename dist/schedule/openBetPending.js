@@ -40,185 +40,200 @@ var openBetPending = function () {
 																switch (_context.prev = _context.next) {
 																	case 0:
 																		eventStatus = 'Pending';
-																		_context.next = 3;
+
+																		if (event.BetDetail.OddType === 'FirstFiveInnings') {
+																			event.BetDetail.OddType === 'First Five Innings';
+																		}
+																		_context.next = 4;
 																		return _axios2.default.get('https://jsonodds.com/api/results/getbyeventid/' + event.ID + '?oddType=' + event.BetDetail.OddType);
 
-																	case 3:
+																	case 4:
 																		response = _context.sent;
+
+																		if (!(response.data.length === 1)) {
+																			_context.next = 89;
+																			break;
+																		}
+
 																		result = Object.assign({}, response.data[0]);
 
 																		if (_lodash2.default.isEmpty(result)) {
-																			_context.next = 81;
+																			_context.next = 83;
 																			break;
 																		}
 
 																		if (!result.Final) {
-																			_context.next = 78;
+																			_context.next = 80;
 																			break;
 																		}
 
 																		_context.t0 = result.FinalType;
-																		_context.next = _context.t0 === 'Finished' ? 10 : _context.t0 === 'Canceled' ? 70 : _context.t0 === 'Postponed' ? 72 : 74;
+																		_context.next = _context.t0 === 'Finished' ? 12 : _context.t0 === 'Canceled' ? 72 : _context.t0 === 'Postponed' ? 74 : 76;
 																		break;
 
-																	case 10:
+																	case 12:
 																		_context.t1 = event.BetDetail.BetType;
-																		_context.next = _context.t1 === 'M-Line' ? 13 : _context.t1 === 'Spread' ? 25 : _context.t1 === 'Total' ? 41 : _context.t1 === 'Draw' ? 57 : 67;
+																		_context.next = _context.t1 === 'M-Line' ? 15 : _context.t1 === 'Spread' ? 27 : _context.t1 === 'Total' ? 43 : _context.t1 === 'Draw' ? 59 : 69;
 																		break;
 
-																	case 13:
+																	case 15:
 																		_context.t2 = true;
-																		_context.next = _context.t2 === (event.BetDetail.OddTarget === 'Home' && result.BinaryScore === '1-0') ? 16 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) > Number(result.AwayScore)) ? 16 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && result.BinaryScore === '0-1') ? 16 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && Number(result.HomeScore) < Number(result.AwayScore)) ? 16 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && result.BinaryScore === '0-1') ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) < Number(result.AwayScore)) ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && result.BinaryScore === '1-0') ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && Number(result.HomeScore) > Number(result.AwayScore)) ? 18 : _context.t2 === (result.BinaryScore === '0-0') ? 20 : _context.t2 === (Number(result.HomeScore) === Number(result.AwayScore)) ? 20 : 22;
+																		_context.next = _context.t2 === (event.BetDetail.OddTarget === 'Home' && result.BinaryScore === '1-0') ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) > Number(result.AwayScore)) ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && result.BinaryScore === '0-1') ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && Number(result.HomeScore) < Number(result.AwayScore)) ? 18 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && result.BinaryScore === '0-1') ? 20 : _context.t2 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) < Number(result.AwayScore)) ? 20 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && result.BinaryScore === '1-0') ? 20 : _context.t2 === (event.BetDetail.OddTarget === 'Away' && Number(result.HomeScore) > Number(result.AwayScore)) ? 20 : _context.t2 === (result.BinaryScore === '0-0') ? 22 : _context.t2 === (Number(result.HomeScore) === Number(result.AwayScore)) ? 22 : 24;
 																		break;
-
-																	case 16:
-																		eventStatus = 'Won';
-																		return _context.abrupt('break', 24);
 
 																	case 18:
-																		eventStatus = 'Lost';
-																		return _context.abrupt('break', 24);
+																		eventStatus = 'Won';
+																		return _context.abrupt('break', 26);
 
 																	case 20:
+																		eventStatus = 'Lost';
+																		return _context.abrupt('break', 26);
+
+																	case 22:
 																		if (event.Sport === 7) {
 																			eventStatus = 'Lost';
 																		} else {
 																			eventStatus = 'Push';
 																		}
-																		return _context.abrupt('break', 24);
-
-																	case 22:
-																		eventStatus = 'Review';
-																		return _context.abrupt('return');
+																		return _context.abrupt('break', 26);
 
 																	case 24:
-																		return _context.abrupt('break', 69);
+																		eventStatus = 'Review';
+																		return _context.abrupt('return');
 
-																	case 25:
+																	case 26:
+																		return _context.abrupt('break', 71);
+
+																	case 27:
 																		_context.t3 = true;
-																		_context.next = _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) - Number(result.AwayScore) === 0.25) ? 28 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) - Number(result.HomeScore) === 0.25) ? 28 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) - Number(result.AwayScore) === -0.25) ? 30 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) - Number(result.HomeScore) === -0.25) ? 30 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) > Number(result.AwayScore)) ? 32 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) > Number(result.HomeScore)) ? 32 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) < Number(result.AwayScore)) ? 34 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) < Number(result.HomeScore)) ? 34 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) === Number(result.AwayScore)) ? 36 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) === Number(result.HomeScore)) ? 36 : 38;
+																		_context.next = _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) - Number(result.AwayScore) === 0.25) ? 30 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) - Number(result.HomeScore) === 0.25) ? 30 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) - Number(result.AwayScore) === -0.25) ? 32 : _context.t3 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) - Number(result.HomeScore) === -0.25) ? 32 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) > Number(result.AwayScore)) ? 34 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) > Number(result.HomeScore)) ? 34 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) < Number(result.AwayScore)) ? 36 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) < Number(result.HomeScore)) ? 36 : _context.t3 === (event.BetDetail.OddTarget === 'Home' && Number(result.HomeScore) + Number(event.BetDetail.OddPoint) === Number(result.AwayScore)) ? 38 : _context.t3 === (event.BetDetail.OddTarget === 'Away' && Number(result.AwayScore) + Number(event.BetDetail.OddPoint) === Number(result.HomeScore)) ? 38 : 40;
 																		break;
-
-																	case 28:
-																		eventStatus = 'WonHalf';
-																		return _context.abrupt('break', 40);
 
 																	case 30:
-																		eventStatus = 'LostHalf';
-																		return _context.abrupt('break', 40);
+																		eventStatus = 'WonHalf';
+																		return _context.abrupt('break', 42);
 
 																	case 32:
-																		eventStatus = 'Won';
-																		return _context.abrupt('break', 40);
+																		eventStatus = 'LostHalf';
+																		return _context.abrupt('break', 42);
 
 																	case 34:
-																		eventStatus = 'Lost';
-																		return _context.abrupt('break', 40);
+																		eventStatus = 'Won';
+																		return _context.abrupt('break', 42);
 
 																	case 36:
-																		eventStatus = 'Push';
-																		return _context.abrupt('break', 40);
+																		eventStatus = 'Lost';
+																		return _context.abrupt('break', 42);
 
 																	case 38:
-																		eventStatus = 'Review';
-																		return _context.abrupt('return');
+																		eventStatus = 'Push';
+																		return _context.abrupt('break', 42);
 
 																	case 40:
-																		return _context.abrupt('break', 69);
+																		eventStatus = 'Review';
+																		return _context.abrupt('return');
 
-																	case 41:
+																	case 42:
+																		return _context.abrupt('break', 71);
+
+																	case 43:
 																		_context.t4 = true;
-																		_context.next = _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) - Number(event.BetDetail.OddPoint) === 0.25) ? 44 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Under' && Number(event.BetDetail.OddPoint) - (Number(result.HomeScore) + Number(result.AwayScore)) === 0.25) ? 44 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) - Number(event.BetDetail.OddPoint) === -0.25) ? 46 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Under' && Number(event.BetDetail.OddPoint) - (Number(result.HomeScore) + Number(result.AwayScore)) === -0.25) ? 46 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) > Number(event.BetDetail.OddPoint)) ? 48 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) < Number(event.BetDetail.OddPoint)) ? 48 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) < Number(event.BetDetail.OddPoint)) ? 50 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) > Number(event.BetDetail.OddPoint)) ? 50 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) === Number(event.BetDetail.OddPoint)) ? 52 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) === Number(event.BetDetail.OddPoint)) ? 52 : 54;
+																		_context.next = _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) - Number(event.BetDetail.OddPoint) === 0.25) ? 46 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Under' && Number(event.BetDetail.OddPoint) - (Number(result.HomeScore) + Number(result.AwayScore)) === 0.25) ? 46 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) - Number(event.BetDetail.OddPoint) === -0.25) ? 48 : _context.t4 === (event.Sport === 7 && event.BetDetail.OddTarget === 'Under' && Number(event.BetDetail.OddPoint) - (Number(result.HomeScore) + Number(result.AwayScore)) === -0.25) ? 48 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) > Number(event.BetDetail.OddPoint)) ? 50 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) < Number(event.BetDetail.OddPoint)) ? 50 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) < Number(event.BetDetail.OddPoint)) ? 52 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) > Number(event.BetDetail.OddPoint)) ? 52 : _context.t4 === (event.BetDetail.OddTarget === 'Over' && Number(result.HomeScore) + Number(result.AwayScore) === Number(event.BetDetail.OddPoint)) ? 54 : _context.t4 === (event.BetDetail.OddTarget === 'Under' && Number(result.HomeScore) + Number(result.AwayScore) === Number(event.BetDetail.OddPoint)) ? 54 : 56;
 																		break;
-
-																	case 44:
-																		eventStatus = 'WonHalf';
-																		return _context.abrupt('break', 56);
 
 																	case 46:
-																		eventStatus = 'LostHalf';
-																		return _context.abrupt('break', 56);
+																		eventStatus = 'WonHalf';
+																		return _context.abrupt('break', 58);
 
 																	case 48:
-																		eventStatus = 'Won';
-																		return _context.abrupt('break', 56);
+																		eventStatus = 'LostHalf';
+																		return _context.abrupt('break', 58);
 
 																	case 50:
-																		eventStatus = 'Lost';
-																		return _context.abrupt('break', 56);
+																		eventStatus = 'Won';
+																		return _context.abrupt('break', 58);
 
 																	case 52:
-																		eventStatus = 'Push';
-																		return _context.abrupt('break', 56);
+																		eventStatus = 'Lost';
+																		return _context.abrupt('break', 58);
 
 																	case 54:
-																		eventStatus = 'Review';
-																		return _context.abrupt('return');
+																		eventStatus = 'Push';
+																		return _context.abrupt('break', 58);
 
 																	case 56:
-																		return _context.abrupt('break', 69);
+																		eventStatus = 'Review';
+																		return _context.abrupt('return');
 
-																	case 57:
+																	case 58:
+																		return _context.abrupt('break', 71);
+
+																	case 59:
 																		_context.t5 = true;
-																		_context.next = _context.t5 === (result.BinaryScore === '0-0') ? 60 : _context.t5 === (Number(result.HomeScore) === Number(result.AwayScore)) ? 60 : _context.t5 === (result.BinaryScore === '1-0') ? 62 : _context.t5 === (result.BinaryScore === '0-1') ? 62 : _context.t5 === (Number(result.HomeScore) !== Number(result.AwayScore)) ? 62 : 64;
+																		_context.next = _context.t5 === (result.BinaryScore === '0-0') ? 62 : _context.t5 === (Number(result.HomeScore) === Number(result.AwayScore)) ? 62 : _context.t5 === (result.BinaryScore === '1-0') ? 64 : _context.t5 === (result.BinaryScore === '0-1') ? 64 : _context.t5 === (Number(result.HomeScore) !== Number(result.AwayScore)) ? 64 : 66;
 																		break;
-
-																	case 60:
-																		eventStatus = 'Won';
-																		return _context.abrupt('break', 66);
 
 																	case 62:
-																		eventStatus = 'Lost';
-																		return _context.abrupt('break', 66);
+																		eventStatus = 'Won';
+																		return _context.abrupt('break', 68);
 
 																	case 64:
-																		eventStatus = 'Review';
-																		return _context.abrupt('return');
+																		eventStatus = 'Lost';
+																		return _context.abrupt('break', 68);
 
 																	case 66:
-																		return _context.abrupt('break', 69);
-
-																	case 67:
 																		eventStatus = 'Review';
 																		return _context.abrupt('return');
+
+																	case 68:
+																		return _context.abrupt('break', 71);
 
 																	case 69:
-																		return _context.abrupt('break', 76);
-
-																	case 70:
-																		eventStatus = 'Canceled';
-																		return _context.abrupt('break', 76);
-
-																	case 72:
-																		eventStatus = 'Postponed';
-																		return _context.abrupt('break', 76);
-
-																	case 74:
 																		eventStatus = 'Review';
 																		return _context.abrupt('return');
 
+																	case 71:
+																		return _context.abrupt('break', 78);
+
+																	case 72:
+																		eventStatus = 'Canceled';
+																		return _context.abrupt('break', 78);
+
+																	case 74:
+																		eventStatus = 'Postponed';
+																		return _context.abrupt('break', 78);
+
 																	case 76:
-																		_context.next = 79;
-																		break;
+																		eventStatus = 'Review';
+																		return _context.abrupt('return');
 
 																	case 78:
-																		eventStatus = 'Pending';
-
-																	case 79:
-																		_context.next = 82;
+																		_context.next = 81;
 																		break;
 
+																	case 80:
+																		eventStatus = 'Pending';
+
 																	case 81:
+																		_context.next = 84;
+																		break;
+
+																	case 83:
 																		eventStatus = 'Review';
 
-																	case 82:
-																		_context.next = 84;
+																	case 84:
+																		_context.next = 86;
 																		return OpenBet.findOneAndUpdate({ orderNumber: openBet.orderNumber, events: { $elemMatch: { 'ID': event.ID, 'OddPickID': event.OddPickID, 'BetDetail.OddType': event.BetDetail.OddType } } }, { '$set': { 'events.$.Status': eventStatus, 'events.$.Result': result } });
 
-																	case 84:
+																	case 86:
 																		console.log('updated event result');
+																		_context.next = 90;
+																		break;
 
-																	case 85:
+																	case 89:
+																		console.log(response.data);
+
+																	case 90:
 																	case 'end':
 																		return _context.stop();
 																}
