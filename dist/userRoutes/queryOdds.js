@@ -66,6 +66,14 @@ router.post('/query-odds', function (req, res) {
 			};
 			event.MatchTimePST = (0, _moment2.default)(event.MatchTime).subtract('7', 'hours');
 			event.OddDetail.LastUpdatedPST = (0, _moment2.default)(event.OddDetail.LastUpdated).subtract('7', 'hours');
+			if (event.Sport === 0) {
+				if (event.HomePitcher === undefined) {
+					event.HomePitcher = 'Action';
+				}
+				if (event.AwayPitcher === undefined) {
+					event.AwayPitcher = 'Action';
+				}
+			}
 			delete event.MatchTime;
 			delete event.OddDetail.LastUpdated;
 			delete event.Odds;

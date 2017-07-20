@@ -69,10 +69,6 @@ var UserSchema = _mongoose2.default.Schema({
 		default: 5000,
 		required: true
 	},
-	thisWeekExtraCredit: {
-		type: Number,
-		default: 0
-	},
 	maxParlayTeam: {
 		type: Number,
 		default: 6

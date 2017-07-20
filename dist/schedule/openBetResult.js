@@ -25,7 +25,7 @@ var openBetResult = function () {
 						_context2.next = 6;
 						return Promise.all(openBets.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-								var eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHaveCanceled, eventsHavePostponed, eventsHaveReview, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsFinished, resultBet, parlayPoint, riskPoint, newHistoryBet, newReviewBet;
+								var eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHaveCanceled, eventsHavePostponed, eventsHaveReview, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsFinished, resultBet, parlayPoint, riskPoint, newHistoryBet, agentIncAmount, newReviewBet;
 								return regeneratorRuntime.wrap(function _callee$(_context) {
 									while (1) {
 										switch (_context.prev = _context.next) {
@@ -71,7 +71,7 @@ var openBetResult = function () {
 												});
 
 												if (!allEventsFinished) {
-													_context.next = 77;
+													_context.next = 83;
 													break;
 												}
 
@@ -89,7 +89,7 @@ var openBetResult = function () {
 													orderResultAmount: 0
 												};
 
-												if (!(openBet.betOption === 'Straight')) {
+												if (!(openBet.betOption === 'Straight' && allEventsFinished)) {
 													_context.next = 39;
 													break;
 												}
@@ -136,23 +136,37 @@ var openBetResult = function () {
 
 											case 39:
 												if (!(openBet.betOption === 'Parlay')) {
-													_context.next = 60;
+													_context.next = 62;
 													break;
 												}
 
 												_context.t1 = true;
-												_context.next = _context.t1 === allEventsPush ? 43 : _context.t1 === allEventsCanceled ? 45 : _context.t1 === (!_lodash2.default.isEmpty(eventsHaveWon) && _lodash2.default.isEmpty(eventsHaveReview) && _lodash2.default.isEmpty(eventsHaveLost) && _lodash2.default.isEmpty(eventsHavePostponed) || allEventsWon) ? 47 : _context.t1 === !_lodash2.default.isEmpty(eventsHaveLost) ? 53 : _context.t1 === !_lodash2.default.isEmpty(eventsHavePostponed) ? 56 : 58;
+												_context.next = _context.t1 === !_lodash2.default.isEmpty(eventsHaveLost) ? 43 : _context.t1 === !_lodash2.default.isEmpty(eventsHavePostponed) ? 47 : _context.t1 === (allEventsPush && allEventsFinished) ? 49 : _context.t1 === (allEventsCanceled && allEventsFinished) ? 51 : _context.t1 === (!_lodash2.default.isEmpty(eventsHaveWon) && _lodash2.default.isEmpty(eventsHaveReview) && _lodash2.default.isEmpty(eventsHaveLost) && _lodash2.default.isEmpty(eventsHavePostponed) && allEventsFinished || allEventsWon && allEventsFinished) ? 53 : _context.t1 === allEventsFinished ? 59 : 61;
 												break;
 
 											case 43:
-												resultBet.orderStatus = 'Push';
-												return _context.abrupt('break', 60);
-
-											case 45:
-												resultBet.orderStatus = 'Canceled';
-												return _context.abrupt('break', 60);
+												resultBet.orderStatus = 'Lost';
+												resultBet.orderResultAmount = -Number(openBet.eventsWagerDetail.RiskAmount);
+												resultBet.events.map(function (event) {
+													if (event.Status === 'Pending') {
+														event.Status = 'Close';
+													}
+												});
+												return _context.abrupt('break', 62);
 
 											case 47:
+												resultBet.orderStatus = 'Postponed';
+												return _context.abrupt('break', 62);
+
+											case 49:
+												resultBet.orderStatus = 'Push';
+												return _context.abrupt('break', 62);
+
+											case 51:
+												resultBet.orderStatus = 'Canceled';
+												return _context.abrupt('break', 62);
+
+											case 53:
 												parlayPoint = [];
 
 												openBet.events.map(function (event) {
@@ -170,61 +184,79 @@ var openBetResult = function () {
 
 												resultBet.orderStatus = 'Won';
 												resultBet.orderResultAmount = ((Number(openBet.eventsWagerDetail.RiskAmount) * Number(riskPoint) - Number(openBet.eventsWagerDetail.RiskAmount)) * 1).toFixed();
-												return _context.abrupt('break', 60);
+												return _context.abrupt('break', 62);
 
-											case 53:
-												resultBet.orderStatus = 'Lost';
-												resultBet.orderResultAmount = -Number(openBet.eventsWagerDetail.RiskAmount);
-												return _context.abrupt('break', 60);
-
-											case 56:
-												resultBet.orderStatus = 'Postponed';
-												return _context.abrupt('break', 60);
-
-											case 58:
+											case 59:
 												resultBet.orderStatus = 'Review';
+												return _context.abrupt('break', 62);
+
+											case 61:
 												return _context.abrupt('return');
 
-											case 60:
+											case 62:
 												if (!(resultBet.orderStatus !== 'Pending')) {
-													_context.next = 76;
+													_context.next = 82;
 													break;
 												}
 
 												if (!(resultBet.orderStatus !== 'Review' || resultBet.orderStatus !== 'Postponed')) {
-													_context.next = 69;
+													_context.next = 75;
 													break;
 												}
 
 												newHistoryBet = new HistoryBet(resultBet);
-												_context.next = 65;
+												_context.next = 67;
 												return newHistoryBet.save();
 
-											case 65:
-												_context.next = 67;
-												return OpenBet.findOneAndRemove({ _id: openBet._id });
-
 											case 67:
-												_context.next = 74;
-												break;
+												_context.next = 69;
+												return OpenBet.findOneAndRemove({ _id: openBet._id });
 
 											case 69:
-												newReviewBet = new ReviewBet(resultBet);
-												_context.next = 72;
-												return newReviewBet.save();
+												agentIncAmount = 0;
 
-											case 72:
-												_context.next = 74;
-												return OpenBet.findOneAndRemove({ _id: openBet._id });
+												if (resultBet.orderStatus === 'Lost' || resultBet.orderStatus === 'LostHalf') {
+													agentIncAmount = resultBet.orderResultAmount;
+												}
 
-											case 74:
-												_context.next = 77;
+												_context.next = 73;
+												return _Agent2.default.findOneAndUpdate({ username: openBet.agent }, { $inc: { creditBalance: resultBet.orderResultAmount } }, { new: true }, function (err, agent) {
+													var newTransaction = new _AgentTransaction2.default({
+														superAgent: 'diamond',
+														agent: resultBet.agent,
+														user: openBet.user,
+														completedAt: resultBet.completedAt,
+														orderNumber: resultBet.orderNumber,
+														amount: resultBet.orderResultAmount,
+														resultAmount: agent.creditBalance,
+														status: resultBet.orderStatus
+													});
+													newTransaction.save().then(function () {
+														console.log('deposit save & transaction saved');
+													});
+												});
+
+											case 73:
+												_context.next = 80;
 												break;
 
-											case 76:
-												console.log('open bet result calculate has error');
+											case 75:
+												newReviewBet = new ReviewBet(resultBet);
+												_context.next = 78;
+												return newReviewBet.save();
 
-											case 77:
+											case 78:
+												_context.next = 80;
+												return OpenBet.findOneAndRemove({ _id: openBet._id });
+
+											case 80:
+												_context.next = 83;
+												break;
+
+											case 82:
+												console.log(resultBet.orderNumber + 'wait next round');
+
+											case 83:
 											case 'end':
 												return _context.stop();
 										}
@@ -269,6 +301,14 @@ var _moment2 = _interopRequireDefault(_moment);
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
+
+var _Agent = require('../models/Agent');
+
+var _Agent2 = _interopRequireDefault(_Agent);
+
+var _AgentTransaction = require('../models/AgentTransaction');
+
+var _AgentTransaction2 = _interopRequireDefault(_AgentTransaction);
 
 var _BetOrder = require('../models/BetOrder');
 

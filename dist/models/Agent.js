@@ -21,12 +21,14 @@ var AgentSchema = _mongoose2.default.Schema({
 	},
 	superAgent: {
 		type: String,
-		default: 'diamond',
-		required: true
+		default: 'diamond'
 	},
 	username: {
 		type: String,
 		required: true
+	},
+	userList: {
+		type: Array
 	},
 	password: {
 		type: String,
@@ -40,16 +42,13 @@ var AgentSchema = _mongoose2.default.Schema({
 	},
 	accountActive: {
 		type: Boolean,
-		default: true,
-		required: true
-	},
-	creditEarn: {
-		type: Array
-	},
-	creditSpent: {
-		type: Array
+		default: true
 	},
 	creditBalance: {
+		type: Number,
+		default: 0
+	},
+	creditPending: {
 		type: Number,
 		default: 0
 	},

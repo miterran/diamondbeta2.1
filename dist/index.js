@@ -74,21 +74,45 @@ var _parlayWagerSubmit = require('./userRoutes/parlayWagerSubmit');
 
 var _parlayWagerSubmit2 = _interopRequireDefault(_parlayWagerSubmit);
 
-var _fetchOpenBets = require('./userRoutes/fetchOpenBets');
+var _fetchUserOpenBets = require('./userRoutes/fetchUserOpenBets');
 
-var _fetchOpenBets2 = _interopRequireDefault(_fetchOpenBets);
+var _fetchUserOpenBets2 = _interopRequireDefault(_fetchUserOpenBets);
 
-var _fetchHistoryBets = require('./userRoutes/fetchHistoryBets');
+var _fetchUserHistoryBets = require('./userRoutes/fetchUserHistoryBets');
 
-var _fetchHistoryBets2 = _interopRequireDefault(_fetchHistoryBets);
+var _fetchUserHistoryBets2 = _interopRequireDefault(_fetchUserHistoryBets);
 
 var _fetchUserState = require('./userRoutes/fetchUserState');
 
 var _fetchUserState2 = _interopRequireDefault(_fetchUserState);
 
+var _userUtils = require('./userRoutes/userUtils');
+
+var _userUtils2 = _interopRequireDefault(_userUtils);
+
 var _fetchAgentState = require('./agentRoutes/fetchAgentState');
 
 var _fetchAgentState2 = _interopRequireDefault(_fetchAgentState);
+
+var _fetchAgentTransactions = require('./agentRoutes/fetchAgentTransactions');
+
+var _fetchAgentTransactions2 = _interopRequireDefault(_fetchAgentTransactions);
+
+var _fetchAgentOpenBets = require('./agentRoutes/fetchAgentOpenBets');
+
+var _fetchAgentOpenBets2 = _interopRequireDefault(_fetchAgentOpenBets);
+
+var _fetchAgentHistoryBets = require('./agentRoutes/fetchAgentHistoryBets');
+
+var _fetchAgentHistoryBets2 = _interopRequireDefault(_fetchAgentHistoryBets);
+
+var _fetchAgentUserSetting = require('./agentRoutes/fetchAgentUserSetting');
+
+var _fetchAgentUserSetting2 = _interopRequireDefault(_fetchAgentUserSetting);
+
+var _depositCreditToAgent = require('./superAgentRoutes/depositCreditToAgent');
+
+var _depositCreditToAgent2 = _interopRequireDefault(_depositCreditToAgent);
 
 var _authLogin = require('./routes/authLogin');
 
@@ -150,12 +174,19 @@ app.use('/api/user', _fetchLeagues2.default);
 app.use('/api/user', _queryOdds2.default);
 app.use('/api/user', _straightWagerSubmit2.default);
 app.use('/api/user', _parlayWagerSubmit2.default);
-app.use('/api/user', _fetchOpenBets2.default);
-app.use('/api/user', _fetchHistoryBets2.default);
+app.use('/api/user', _fetchUserOpenBets2.default);
+app.use('/api/user', _fetchUserHistoryBets2.default);
 app.use('/api/user', _fetchUserState2.default);
+app.use('/api/user', _userUtils2.default);
 
 app.use('/api/agent', _passport2.default.authenticate('jwt', { session: false }));
 app.use('/api/agent', _fetchAgentState2.default);
+app.use('/api/agent', _fetchAgentTransactions2.default);
+app.use('/api/agent', _fetchAgentOpenBets2.default);
+app.use('/api/agent', _fetchAgentHistoryBets2.default);
+app.use('/api/agent', _fetchAgentUserSetting2.default);
+
+app.use('/api/super-agent', _depositCreditToAgent2.default);
 
 app.get('*', function (request, response) {
 	response.sendFile(_path2.default.resolve(__dirname, '../client/build', 'index.html'));

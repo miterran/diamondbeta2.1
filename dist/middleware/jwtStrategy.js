@@ -36,21 +36,13 @@ jwtOptions.secretOrKey = _config2.default.jwtSecret;
 var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
 	switch (jwt_payload.accountType) {
 		case 'user':
-			_User2.default.findOne({ username: jwt_payload.username }, function (err, user) {
-				if (user) {
-					next(null, user);
-				} else {
-					next(null, false);
-				}
+			_User2.default.findOne({ username: jwt_payload.username }, 'username agent superAgent passcode accountActive accountType', function (err, user) {
+				user ? next(null, user) : next(null, false);
 			});
 			break;
 		case 'agent':
-			_Agent2.default.findOne({ username: jwt_payload.username }, function (err, agent) {
-				if (agent) {
-					next(null, agent);
-				} else {
-					next(null, false);
-				}
+			_Agent2.default.findOne({ username: jwt_payload.username }, 'username creditBalance accountActive passcode superAgent accountType userList', function (err, agent) {
+				agent ? next(null, agent) : next(null, false);
 			});
 			break;
 		default:

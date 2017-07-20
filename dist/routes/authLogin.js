@@ -24,6 +24,10 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -121,7 +125,7 @@ router.get('/register-user', function (req, res) {
 		weeklyStartBalance: 5000,
 		thisWeekExtraCredit: 0,
 		maxParlayTeam: 6,
-		createAt: moment()
+		createAt: (0, _moment2.default)()
 	});
 	newUser.save().then(function () {
 		console.log('user acc saved');
@@ -131,9 +135,9 @@ router.get('/register-user', function (req, res) {
 
 router.get('/register-agent', function (req, res) {
 	var newAgent = new _Agent2.default({
-		username: '007',
+		username: 'diamond',
 		password: '1234',
-		createAt: moment()
+		createAt: (0, _moment2.default)()
 	});
 	newAgent.save().then(function () {
 		console.log('agent acc saved');
