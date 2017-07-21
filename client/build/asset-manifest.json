@@ -1,10 +1,12 @@
 {
-  "main.css": "static/css/main.9bb7e7e3.css",
-  "main.css.map": "static/css/main.9bb7e7e3.css.map",
-  "main.js": "static/js/main.c95ef56e.js",
-  "main.js.map": "static/js/main.c95ef56e.js.map",
+  "main.css": "static/css/main.75691694.css",
+  "main.css.map": "static/css/main.75691694.css.map",
+  "main.js": "static/js/main.f89b8de6.js",
+  "main.js.map": "static/js/main.f89b8de6.js.map",
   "static/media/wallpaper_1.jpg": "static/media/wallpaper_1.24941627.jpg",
   "static/media/wallpaper_2.jpg": "static/media/wallpaper_2.d30714ae.jpg",
   "static/media/wallpaper_3.jpg": "static/media/wallpaper_3.19f73b61.jpg",
-  "static/media/wallpaper_4.jpg": "static/media/wallpaper_4.1f69cff8.jpg"
+  "static/media/wallpaper_4.jpg": "static/media/wallpaper_4.1f69cff8.jpg",
+  "static/media/wallpaper_5.jpg": "static/media/wallpaper_5.b9220b61.jpg",
+  "static/media/wallpaper_6.jpg": "static/media/wallpaper_6.0df58364.jpg"
 }

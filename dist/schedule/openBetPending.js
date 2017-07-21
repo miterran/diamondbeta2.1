@@ -40,14 +40,10 @@ var openBetPending = function () {
 																switch (_context.prev = _context.next) {
 																	case 0:
 																		eventStatus = 'Pending';
+																		_context.next = 3;
+																		return _axios2.default.get('https://jsonodds.com/api/results/getbyeventid/' + event.ID + '?oddType=' + event.OddDetail.OddType);
 
-																		if (event.BetDetail.OddType === 'FirstFiveInnings') {
-																			event.BetDetail.OddType === 'First Five Innings';
-																		}
-																		_context.next = 4;
-																		return _axios2.default.get('https://jsonodds.com/api/results/getbyeventid/' + event.ID + '?oddType=' + event.BetDetail.OddType);
-
-																	case 4:
+																	case 3:
 																		response = _context.sent;
 
 																		if (!(response.data.length === 1)) {
@@ -61,6 +57,8 @@ var openBetPending = function () {
 																			_context.next = 83;
 																			break;
 																		}
+
+																		console.log(result);
 
 																		if (!result.Final) {
 																			_context.next = 80;
