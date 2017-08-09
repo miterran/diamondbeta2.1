@@ -141,7 +141,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 _passport2.default.use(_jwtStrategy2.default);
 
 _mongoose2.default.Promise = global.Promise;;
-_mongoose2.default.connect(_config2.default.mongoURL);
+_mongoose2.default.connect(_config2.default.mongoURL, { useMongoClient: true });
+
 
 var app = (0, _express2.default)();
 app.server = _http2.default.createServer(app);
