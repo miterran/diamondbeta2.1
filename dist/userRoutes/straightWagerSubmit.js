@@ -89,7 +89,7 @@ router.post('/straight-wager-submit', function () {
 												break;
 
 											case 13:
-												queryOdd = _querystring2.default.stringify({ GameIDs: event.ID, Source: event.OddDetail.SiteID, Sport: _sportConfig2.default[event.Sport].sport, OddType: event.BetDetail.OddType });
+												queryOdd = _querystring2.default.stringify({ GameIDs: event.ID, Source: event.OddDetail.SiteID, Sport: _sportConfig2.default[event.Sport].sport, OddType: event.BetDetail.OddType.replace(/\s/g, '') });
 												_context.next = 16;
 												return _axios2.default.post('https://jsonodds.com/api/odds/bygames', queryOdd);
 

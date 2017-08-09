@@ -112,7 +112,7 @@ router.post('/parlay-wager-submit', function () {
 									while (1) {
 										switch (_context.prev = _context.next) {
 											case 0:
-												queryOdd = _querystring2.default.stringify({ GameIDs: event.ID, Source: event.OddDetail.SiteID, Sport: _sportConfig2.default[event.Sport].sport, OddType: event.BetDetail.OddType });
+												queryOdd = _querystring2.default.stringify({ GameIDs: event.ID, Source: event.OddDetail.SiteID, Sport: _sportConfig2.default[event.Sport].sport, OddType: event.BetDetail.OddType.replace(/\s/g, '') });
 												_context.next = 3;
 												return _axios2.default.post('https://jsonodds.com/api/odds/bygames', queryOdd);
 
