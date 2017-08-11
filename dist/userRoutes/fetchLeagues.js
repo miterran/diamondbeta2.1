@@ -61,22 +61,27 @@ router.get('/fetch-leagues', function (req, res) {
                     });
 
                     break;
-                // case 7: // SOCCER
-                //     Array.isArray(sportConfig[7].leagues) ? null : sportConfig[7].leagues = [];
-                //     const soccerDetail = { leagueName: event.League.Name , region: event.DisplayRegion, details: '', oddTypes: [] };
-                //     const addSoccerDetail = sportConfig[7].leagues.every(detail => detail.name !== event.League.Name && detail.region !== event.DisplayRegion);
-                //     addSoccerDetail ? sportConfig[7].leagues.push(soccerDetail) : null;
-                //     event.Odds.map(odd => {
-                //         sportConfig[7].leagues.map(detail => {
-                //             if(detail.leagueName === event.League.Name && detail.region === event.DisplayRegion){
-                //                 const addOdd = detail.oddTypes.every(oddType => oddType !== odd.OddType);
-                //                 addOdd ? detail.oddTypes.push(odd.OddType) : null;
-                //             }
-                //             return detail;
-                //         })
-                //         return odd;
-                //     })
-                //     break;
+                case 7:
+                    // SOCCER
+                    Array.isArray(_sportConfig2.default[7].leagues) ? null : _sportConfig2.default[7].leagues = [];
+                    var soccerDetail = { leagueName: event.League.Name, region: event.DisplayRegion, details: '', oddTypes: [] };
+                    var addSoccerDetail = _sportConfig2.default[7].leagues.every(function (detail) {
+                        return detail.name !== event.League.Name && detail.region !== event.DisplayRegion;
+                    });
+                    addSoccerDetail ? _sportConfig2.default[7].leagues.push(soccerDetail) : null;
+                    event.Odds.map(function (odd) {
+                        _sportConfig2.default[7].leagues.map(function (detail) {
+                            if (detail.leagueName === event.League.Name && detail.region === event.DisplayRegion) {
+                                var addOdd = detail.oddTypes.every(function (oddType) {
+                                    return oddType !== odd.OddType;
+                                });
+                                addOdd ? detail.oddTypes.push(odd.OddType) : null;
+                            }
+                            return detail;
+                        });
+                        return odd;
+                    });
+                    break;
                 default:
                     return;
             }
